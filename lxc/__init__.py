@@ -57,7 +57,7 @@ class _LXCMonitor(threading.Thread):
         self.join() 
 
         
-def create(name, config_file=None, template=None, backing_store=None, template_options=None):
+def create(name, config_file=None, template=None, backing_store=None, template_options=None, **kwargs):
     '''
     Create a new container
     raises ContainerAlreadyExists exception if the container name is reserved already.
@@ -78,6 +78,9 @@ def create(name, config_file=None, template=None, backing_store=None, template_o
         cmd += ' -B %s' % backing_store
     if template_options:
         cmd += '-- %s' % template_options
+
+    for key, val in kwargs.items():
+        cmd += '--{0} {1}'.format(key, val)
 
     if subprocess.check_call('%s >> /dev/null' % cmd, shell=True) == 0:
         if not exists(name):
