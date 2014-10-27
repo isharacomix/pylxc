@@ -122,7 +122,7 @@ def all_as_dict():
                     }
                     
     '''
-    cmd = ['lxc-list']
+    cmd = ['lxc-ls']
     out = subprocess.check_output(cmd).splitlines()
     stopped = []
     running = []
