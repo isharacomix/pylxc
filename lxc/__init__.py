@@ -130,18 +130,15 @@ def all_as_dict():
     current = None
     for c in out:
         c = c.strip()
-        if c == 'RUNNING':
-            current = running
-            continue
-        if c == 'STOPPED':
-            current = stopped
-            continue
-        if c == 'FROZEN':
-            current = frozen
-            continue
+        name = c.split(' ')[0]
+        if 'RUNNING' in c:
+            running.append(name)
+        if 'STOPPED' in c:
+            stopped.append(name)
+        if 'FROZEN' in c:
+            frozen.append(name)
         if not len(c):
             continue
-        current.append(c)
     return {'Running': running,
             'Stopped': stopped,
             'Frozen': frozen}
