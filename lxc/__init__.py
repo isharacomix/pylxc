@@ -178,7 +178,8 @@ def stop(name):
     if not exists(name):
         raise ContainerNotExists("The container (%s) does not exist!" % name)
     cmd = ['lxc-stop', '-n', name]
-    subprocess.check_call(cmd)
+    # returns 2 on success, so not using check_call()
+    subprocess.call(cmd)
     
 
 def kill(name, signal):
