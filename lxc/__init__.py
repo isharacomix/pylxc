@@ -323,3 +323,12 @@ def notify(name, states, callback):
         callback()
     _logger.info("Waiting on states %s for container %s", states, name)
     threading.Thread(target=th).start()
+    
+def attach_and_run(name, execcmd):
+    '''
+    attach to a running container and execute some commands"
+    '''
+    if not exists(name):
+        raise ContainerNotExists("The container (%s) does not exist!" % name)
+    cmd = "lxc-attach -n %s -- %s" % (name, execcmd)
+    subprocess.call('%s >> /dev/null' % cmd, shell=True)
